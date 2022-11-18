@@ -1,9 +1,11 @@
 /**
- * Récupération du model User, utilisation des modules bcrypt et jwt
+ * Récupération du model User, utilisation des modules bcrypt, jwt et dotenv
  */
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 /**
  * Route POST qui permet d'enregister un utilisateur
  */
@@ -71,7 +73,7 @@ exports.login = (req,res,next) => {
                          */
                         token: jwt.sign(
                             { userId: user._id},
-                            'RANDOM_TOKEN_SECRET',
+                            process.env.TOKEN_SECRET,
                             {expiresIn: '24h'}
                         )
                     });

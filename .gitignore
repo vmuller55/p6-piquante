@@ -1,2 +1,3 @@
 /backend/images
 node_modules
+/backend/.env
