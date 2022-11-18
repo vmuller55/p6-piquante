@@ -8,14 +8,14 @@ const MIME_TYPES = {
     'image/png': 'png'
 };
 /**
- * Permet de définir le chemin et le nom des images entrantes
+ * Utilisation de la méthode diskStorage qui va définir le chemin d'accès de l'image ainsi que son nom
  */
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, 'images')
     },
     /**
-     * Construction du nom de fichier la méthode split va transformer les espace en underscore
+     * Construction du nom de fichier la méthode split et la méthode join va transformer les espace en underscore
      */
     filename: (req, file, callback) => {
         const name = file.originalname.split(' ').join('_');

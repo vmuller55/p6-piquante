@@ -1,5 +1,5 @@
 /**
- * Importation de mongoose et de express
+ * Importation de mongoose, express et path / Attribution des routes dans des const
  */
 const express = require('express');
 const mongoose = require('mongoose');
@@ -31,9 +31,14 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
   });
-
+/**
+ * Définition des routes à l'aide des variables
+ */
 app.use('/api/auth', userRoutes);
 app.use('/api/sauces', sauceRoutes);
+/**
+ * Utilisation de la fonction static inclus dans express pour pouvoir utiliser le répértoir imagges
+ */
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
