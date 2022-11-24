@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
+const rateLimit = require('express-rate-limit');
 /**
  * Utilisation d'express via une variable
  */
@@ -47,6 +48,17 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
  * Utilisation de Helmet afin de renforcer la sécurité de l'api // Spécifiquement sur les headers HTTP
  */
 app.use(helmet({crossOriginResourcePolicy: false}));
+/**
+ * Utilisation de rateLimit afin de renforcer la sécurité ici chaque adresse ip sera limiter à 100 requêtes par tranche de 15 minutes
+ */
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
+// Apply the rate limiting middleware to all requests
+app.use(limiter);
 
 module.exports = app;
